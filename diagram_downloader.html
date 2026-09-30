@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Diagram Downloader</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; background: #f0f4f8; }
+  h1 { color: #1B3A5C; }
+  .diagram { background: #fff; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+  .diagram h3 { margin-top: 0; color: #1B3A5C; font-size: 15px; }
+  .diagram .mermaid { margin: 10px 0; text-align: center; }
+  button { background: #2E8BF0; color: white; border: none; padding: 10px 22px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; margin-top: 10px; }
+  button:hover { background: #1B6FD8; }
+  button.done { background: #33c17a; }
+</style>
+</head>
+<body>
+
+<h1>📥 Download All 17 Diagrams</h1>
+<p>Click each button. The PNG downloads with the correct filename automatically. Move all PNGs into your project folder next to <code>report.html</code>.</p>
+
+<div class="diagram" id="d1">
+  <h3>Figure 1: Architecture</h3>
+  <div class="mermaid">
+flowchart TB
+    U[User] --> UI[CustomTkinter UI]
+    UI --> LOGIC[Business Logic]
+    LOGIC --> DB[(SQLite Database)]
+  </div>
+  <button onclick="download('d1','fig1_architecture.png',this)">Download fig1_architecture.png</button>
+</div>
+
+<div class="diagram" id="d2">
+  <h3>Figure 2: ER Diagram</h3>
+  <div class="mermaid">
+erDiagram
+    USERS ||--o{ ISSUES : borrows
+    USERS ||--o{ RESERVATIONS : places
+    USERS ||--o{ REQUESTS : sends
+    BOOKS ||--o{ ISSUES : issued
+    BOOKS ||--o{ RESERVATIONS : reserved
+    USERS {
+        int id PK
+        text code
+        text name
+        text password
+        text role
+        text email
+        text phone
+        text department
+        text status
+    }
+    BOOKS {
+        int id PK
+        text isbn
+        text title
+        text author
+        text publisher
+        int year
+        text category
+        text rack
+        real price
+        int total
+        int available
+    }
+    ISSUES {
+        int id PK
+        int user_id FK
+        int book_id FK
+        text issued_on
+        text due_on
+        text returned_on
+        real fine
+        int fine_paid
+        int renewals
+    }
+    RESERVATIONS {
+        int id PK
+        int user_id FK
+        int book_id FK
+        text reserved_on
+        text status
+    }
+    NOTICES {
+        int id PK
+        text title
+        text body
+        text posted_on
+        text posted_by
+    }
+    REQUESTS {
+        int id PK
+        int user_id FK
+        text title
+        text author
+        text reason
+        text status
+        text remark
+    }
+  </div>
+  <button onclick="download('d2','fig2_er_diagram.png',this)">Download fig2_er_diagram.png</button>
+</div>
+
+<div class="diagram" id="d3">
+  <h3>Figure 3: Class Diagram</h3>
+  <div class="mermaid">
+classDiagram
+    class LibraryApp {
+        -user
+        -view
+        +show_login()
+        +show_register()
+        +enter_portal()
+        +logout()
+    }
+    class LoginScreen {
+        -role
+        +submit()
+    }
+    class RegisterScreen {
+        -role
+        +submit()
+    }
+    class PortalShell {
+        +show(key)
+        +refresh()
+        +body()
+    }
+    class StudentPortal
+    class FacultyPortal
+    class LibrarianPortal
+    class Database {
+        +login()
+        +register()
+        +list_books()
+        +issue_book()
+        +return_book()
+        +renew()
+        +reserve()
+        +fine_for()
+        +stats()
+    }
+    class Reports {
+        +export_workbook()
+        +export_csv()
+    }
+    class Theme {
+        +set_mode()
+        +c()
+        +font()
+    }
+    class Widgets {
+        +Table
+        +StatCard
+        +FormField
+        +popup()
+    }
+    LibraryApp --> LoginScreen
+    LibraryApp --> RegisterScreen
+    LibraryApp --> StudentPortal
+    LibraryApp --> FacultyPortal
+    LibraryApp --> LibrarianPortal
+    StudentPortal --|> PortalShell
+    FacultyPortal --|> PortalShell
+    LibrarianPortal --|> PortalShell
+    PortalShell --> Database
+    LoginScreen --> Database
+    LibrarianPortal --> Reports
+    Widgets --> Theme
+    Reports --> Database
+  </div>
+  <button onclick="download('d3','fig3_class_diagram.png',this)">Download fig3_class_diagram.png</button>
+</div>
+
+<div class="diagram" id="d4">
+  <h3>Figure 4: Use Case Diagram</h3>
+  <div class="mermaid">
+flowchart LR
+    S((Student))
+    F((Faculty))
+    L((Librarian))
+    subgraph SYS[Central Library System]
+        UC1([Login])
+        UC2([Search catalogue])
+        UC3([View my books])
+        UC4([Renew book])
+        UC5([Reserve book])
+        UC6([View notices])
+        UC7([Send purchase request])
+        UC8([Issue book])
+        UC9([Return book])
+        UC10([Manage catalogue])
+        UC11([Approve registrations])
+        UC12([Track overdues])
+        UC13([Export reports])
+    end
+    S --> UC1
+    S --> UC2
+    S --> UC3
+    S --> UC4
+    S --> UC5
+    S --> UC6
+    F --> UC1
+    F --> UC2
+    F --> UC7
+    L --> UC1
+    L --> UC8
+    L --> UC9
+    L --> UC10
+    L --> UC11
+    L --> UC12
+    L --> UC13
+  </div>
+  <button onclick="download('d4','fig4_usecase.png',this)">Download fig4_usecase.png</button>
+</div>
+
+<div class="diagram" id="d5">
+  <h3>Figure 5: DFD Level 0</h3>
+  <div class="mermaid">
+flowchart LR
+    S[Student]
+    F[Faculty]
+    L[Librarian]
+    SYS((0 Library System))
+    S -- login, search, reserve --> SYS
+    SYS -- catalogue, dues, notices --> S
+    F -- login, purchase request --> SYS
+    SYS -- status --> F
+    L -- issue, return, reports --> SYS
+    SYS -- dashboard, exports --> L
+  </div>
+  <button onclick="download('d5','fig5_dfd0.png',this)">Download fig5_dfd0.png</button>
+</div>
+
+<div class="diagram" id="d6">
+  <h3>Figure 6: DFD Level 1</h3>
+  <div class="mermaid">
+flowchart TB
+    S[Student]
+    F[Faculty]
+    L[Librarian]
+    P1((1.0 Auth))
+    P2((2.0 Catalogue))
+    P3((3.0 Circulation))
+    P4((4.0 Reservations))
+    P5((5.0 Notices))
+    P6((6.0 Reports))
+    D1[(Users)]
+    D2[(Books)]
+    D3[(Issues)]
+    D4[(Reservations)]
+    D5[(Notices)]
+    D6[(Requests)]
+    S --> P1
+    F --> P1
+    L --> P1
+    P1 --> D1
+    S --> P2
+    L --> P2
+    P2 --> D2
+    L --> P3
+    P3 --> D3
+    P3 --> D2
+    S --> P4
+    P4 --> D4
+    F --> P5
+    L --> P5
+    P5 --> D5
+    P5 --> D6
+    L --> P6
+    P6 --> D1
+    P6 --> D3
+  </div>
+  <button onclick="download('d6','fig6_dfd1.png',this)">Download fig6_dfd1.png</button>
+</div>
+
+<div class="diagram" id="d7">
+  <h3>Figure 7: DFD Level 2</h3>
+  <div class="mermaid">
+flowchart LR
+    L[Librarian]
+    P31((3.1 Lookup))
+    P32((3.2 Check policy))
+    P33((3.3 Issue book))
+    P34((3.4 Return book))
+    P35((3.5 Renew))
+    D1[(Users)]
+    D2[(Books)]
+    D3[(Issues)]
+    D4[(Reservations)]
+    L --> P31
+    P31 --> D1
+    P31 --> P32
+    P32 --> D3
+    P32 --> P33
+    P32 --> P35
+    P33 --> D2
+    P33 --> D3
+    P33 -.-> D4
+    P34 --> D3
+    P34 --> D2
+    P34 -.-> D4
+    P35 --> D3
+    P33 --> L
+    P34 --> L
+    P35 --> L
+  </div>
+  <button onclick="download('d7','fig7_dfd2.png',this)">Download fig7_dfd2.png</button>
+</div>
+
+<div class="diagram" id="d8">
+  <h3>Figure 8a: Sequence Login</h3>
+  <div class="mermaid">
+sequenceDiagram
+    actor U as User
+    participant LS as LoginScreen
+    participant DB as database.py
+    participant SQL as SQLite
+    U->>LS: enter ID + password
+    LS->>DB: login(code, password, role)
+    DB->>SQL: SELECT user
+    SQL-->>DB: row
+    alt Valid
+        DB-->>LS: user data
+        LS-->>U: open portal
+    else Invalid
+        DB-->>LS: error
+        LS-->>U: show error
+    end
+  </div>
+  <button onclick="download('d8','fig8a_sequence_login.png',this)">Download fig8a_sequence_login.png</button>
+</div>
+
+<div class="diagram" id="d9">
+  <h3>Figure 8b: Sequence Issue</h3>
+  <div class="mermaid">
+sequenceDiagram
+    actor Lib as Librarian
+    participant UI as Issue Desk
+    participant DB as database.py
+    participant SQL as SQLite
+    Lib->>UI: enter member ID
+    UI->>DB: user_by_code()
+    DB-->>UI: user row
+    UI->>DB: can_issue(person)
+    DB-->>UI: allowed / reason
+    Lib->>UI: pick book, click Issue
+    UI->>DB: issue_book()
+    DB->>SQL: INSERT INTO issues
+    DB->>SQL: UPDATE books.available
+    DB-->>UI: success
+    UI-->>Lib: popup confirmation
+  </div>
+  <button onclick="download('d9','fig8b_sequence_issue.png',this)">Download fig8b_sequence_issue.png</button>
+</div>
+
+<div class="diagram" id="d10">
+  <h3>Figure 8c: Sequence Return</h3>
+  <div class="mermaid">
+sequenceDiagram
+    actor Lib as Librarian
+    participant UI as Return Desk
+    participant DB as database.py
+    participant SQL as SQLite
+    Lib->>UI: enter member ID
+    UI->>DB: active_issues()
+    DB-->>UI: loan list
+    Lib->>UI: click Return
+    UI->>DB: return_book(issue_pk)
+    DB->>DB: fine_for(issue)
+    DB->>SQL: UPDATE issues
+    DB->>SQL: UPDATE books.available
+    DB-->>UI: message + fine
+    UI-->>Lib: popup with fine
+  </div>
+  <button onclick="download('d10','fig8c_sequence_return.png',this)">Download fig8c_sequence_return.png</button>
+</div>
+
+<div class="diagram" id="d11">
+  <h3>Figure 9: Activity Diagram</h3>
+  <div class="mermaid">
+flowchart TD
+    A([Start]) --> B{Member active?}
+    B -- No --> Z1([Show reason])
+    B -- Yes --> C{Under limit?}
+    C -- No --> Z2([Limit reached])
+    C -- Yes --> D{Fine below Rs 50?}
+    D -- No --> Z3([Blocked])
+    D -- Yes --> E([Search book])
+    E --> F{Copy available?}
+    F -- No --> G([Offer reservation])
+    F -- Yes --> H([Create issue])
+    H --> I([Decrease stock])
+    I --> J([Give book])
+    J --> K([Member returns])
+    K --> L{Days late?}
+    L -- Yes --> M([Calculate fine])
+    L -- No --> N([No fine])
+    M --> O([Increase stock])
+    N --> O
+    O --> P([Close issue])
+  </div>
+  <button onclick="download('d11','fig9_activity.png',this)">Download fig9_activity.png</button>
+</div>
+
+<div class="diagram" id="d12">
+  <h3>Figure 10: Component Diagram</h3>
+  <div class="mermaid">
+flowchart TB
+    MAIN[main.py]
+    LOGIN[login.py]
+    REG[register.py]
+    SHELL[shell.py]
+    STUD[student.py]
+    FAC[faculty.py]
+    LIB[librarian.py]
+    BORR[borrower.py]
+    DB[database.py]
+    REP[reports.py]
+    THEME[theme.py]
+    WID[widgets.py]
+    FILE[(library.db)]
+    MAIN --> LOGIN
+    MAIN --> REG
+    MAIN --> STUD
+    MAIN --> FAC
+    MAIN --> LIB
+    STUD --> SHELL
+    FAC --> SHELL
+    LIB --> SHELL
+    SHELL --> BORR
+    SHELL --> WID
+    BORR --> DB
+    LIB --> DB
+    LIB --> REP
+    REP --> DB
+    DB --> FILE
+    WID --> THEME
+  </div>
+  <button onclick="download('d12','fig10_component.png',this)">Download fig10_component.png</button>
+</div>
+
+<div class="diagram" id="d13">
+  <h3>Figure 11: Deployment Diagram</h3>
+  <div class="mermaid">
+flowchart TB
+    subgraph PC[User PC]
+        subgraph OS[Operating System]
+            subgraph PY[Python 3.10+]
+                APP[Library App]
+                CTK[customtkinter]
+                MPL[matplotlib]
+                OPX[openpyxl]
+                SQL3[sqlite3]
+                DB[(library.db)]
+            end
+            FILES[Report Files .xlsx / .csv]
+        end
+    end
+    APP --> CTK
+    APP --> MPL
+    APP --> OPX
+    APP --> SQL3
+    SQL3 --> DB
+    APP --> FILES
+  </div>
+  <button onclick="download('d13','fig11_deployment.png',this)">Download fig11_deployment.png</button>
+</div>
+
+<div class="diagram" id="d14">
+  <h3>Figure 12a: State User</h3>
+  <div class="mermaid">
+stateDiagram-v2
+    [*] --> Pending: register()
+    Pending --> Active: librarian approves
+    Active --> Blocked: librarian blocks
+    Blocked --> Active: librarian unblocks
+  </div>
+  <button onclick="download('d14','fig12a_state_user.png',this)">Download fig12a_state_user.png</button>
+</div>
+
+<div class="diagram" id="d15">
+  <h3>Figure 12b: State Loan</h3>
+  <div class="mermaid">
+stateDiagram-v2
+    [*] --> OnLoan: issue_book()
+    OnLoan --> Overdue: due date passed
+    OnLoan --> Returned: on time
+    Overdue --> Returned: late return
+    Returned --> FinePending: fine > 0
+    Returned --> Closed: fine = 0
+    FinePending --> Closed: fine paid
+  </div>
+  <button onclick="download('d15','fig12b_state_loan.png',this)">Download fig12b_state_loan.png</button>
+</div>
+
+<div class="diagram" id="d16">
+  <h3>Figure 12c: State Reservation</h3>
+  <div class="mermaid">
+stateDiagram-v2
+    [*] --> Waiting: reserve()
+    Waiting --> Ready: copy returned
+    Waiting --> Cancelled: user cancels
+    Ready --> Collected: picked up
+    Ready --> Cancelled: 3 days expired
+  </div>
+  <button onclick="download('d16','fig12c_state_reservation.png',this)">Download fig12c_state_reservation.png</button>
+</div>
+
+<div class="diagram" id="d17">
+  <h3>Figure 13: Package Diagram</h3>
+  <div class="mermaid">
+flowchart LR
+    subgraph ROOT[library_management/]
+        MAIN[main.py]
+        subgraph SCREENS[screens/]
+            S1[login.py]
+            S2[register.py]
+            S3[shell.py]
+            S4[student.py]
+            S5[faculty.py]
+            S6[librarian.py]
+            S7[borrower.py]
+        end
+        DB[database.py]
+        REP[reports.py]
+        THEME[theme.py]
+        WID[widgets.py]
+        FILE[(library.db)]
+    end
+    MAIN --> SCREENS
+    SCREENS --> DB
+    S6 --> REP
+    REP --> DB
+    SCREENS --> WID
+    WID --> THEME
+    DB --> FILE
+  </div>
+  <button onclick="download('d17','fig13_package.png',this)">Download fig13_package.png</button>
+</div>
+
+<script>
+mermaid.initialize({ startOnLoad: true, theme: 'default' });
+
+async function download(divId, filename, btn) {
+  const svg = document.querySelector('#' + divId + ' .mermaid svg');
+  if (!svg) {
+    alert('Diagram not ready yet. Wait 2 seconds and try again.');
+    return;
+  }
+
+  const clone = svg.cloneNode(true);
+  const bbox = svg.getBoundingClientRect();
+  const w = Math.max(bbox.width, 400);
+  const h = Math.max(bbox.height, 200);
+
+  clone.setAttribute('width', w);
+  clone.setAttribute('height', h);
+  clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+
+  const svgData = new XMLSerializer().serializeToString(clone);
+  const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+  const url = URL.createObjectURL(svgBlob);
+
+  const img = new Image();
+  img.onload = function () {
+    const scale = 2;
+    const canvas = document.createElement('canvas');
+    canvas.width = w * scale;
+    canvas.height = h * scale;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.scale(scale, scale);
+    ctx.drawImage(img, 0, 0, w, h);
+    URL.revokeObjectURL(url);
+
+    canvas.toBlob(function (blob) {
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = URL.createObjectURL(blob);
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+
+      btn.textContent = '✅ Downloaded ' + filename;
+      btn.classList.add('done');
+    }, 'image/png');
+  };
+  img.src = url;
+}
+</script>
+</body>
+</html>
